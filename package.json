@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "parcel serve src/index.html",
-    "build": "parcel build -d public/ src/index.html"
+    "start": "parcel serve src/index.html src/hex.html",
+    "build": "parcel build -d public/ src/index.html src/hex.html"
   },
   "author": "",
   "license": "ISC",
