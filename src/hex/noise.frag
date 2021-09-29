@@ -103,29 +103,29 @@ vec2 hexPixel(vec2 point) {
 }
 
 float dither(float amount) {
-  float threshold = Bayer16(gl_FragCoord.xy / 2.0);
-  float bias = 1.0 + (-2.0 * float(amount < threshold));
-  return clamp(floor(amount * 16.0) + bias, 0.0, 16.0) / 16.0;
+  const float STEPS = 8.0;
+  float threshold = Bayer32(gl_FragCoord.xy / 2.0);
+  float ditherAmount = fract(amount * STEPS);
+  float bias = float(ditherAmount > threshold) / STEPS;
+  return clamp(floor(amount * STEPS) / STEPS + bias, 0.0, 1.0);
 }
 
 float vig() {
   vec2 uv = gl_FragCoord.xy / iResolution.xy;
   uv *= 1.0 - uv.yx;
-  return pow(uv.x * uv.y * 64.0, 0.125);
+  return pow(uv.x * uv.y * 256.0, 0.125);
 }
 
 void main()
 {
-  // Normalized pixel coordinates (from 0 to 1)
-  // vec2 uv = gl_FragCoord.xy / iResolution.xy;
-  vec3 noiseInput = vec3(hexPixel(gl_FragCoord.xy), iTime / 20.0);
-  float ditherNoise = clamp((snoise(noiseInput) + 1.0 / 2.0), 0.0, 1.0);
+  vec3 noiseInput = vec3(hexPixel(gl_FragCoord.xy) / 8.0, iTime / 32.0);
+  float ditherNoise = (snoise(noiseInput) + 1.0) / 2.0;
 
   // vec4 mainColor = vec4(0.89804, 0.19608, 0.39608, 1.0); // 227, 50, 101
   // vec4 mainColor = vec4(1.0, 0.6, 0.0, 1.0);
   vec4 backgroundColor = vec4(0.06667, 0.07059, 0.11373, 1.0); // 17, 18, 29
   vec4 mainColor = vec4(1.0, 1.0, 1.0, 2.0) - backgroundColor;
 
-  float mixWithBias = clamp(dither(ditherNoise) - 0.45, 0.0, 1.0);
+  float mixWithBias = clamp((dither(ditherNoise) - 0.45) - (1.0 - vig()), 0.0, 1.0);
   gl_FragColor = mix(backgroundColor, mainColor, mixWithBias);
 }
