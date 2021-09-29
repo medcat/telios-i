@@ -1,0 +1,125 @@
+$black-color: rgb(17, 18, 29);
+$main-color: rgb(227, 50, 101);
+$white-color: invert($black-color); // 238, 237, 226
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+html:focus-within { scroll-behavior: smooth; }
+body {
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+a:not([class]) { text-decoration-skip-ink: auto; }
+input,
+button,
+textarea,
+select { font: inherit; }
+
+#backsplash-container { z-index: -1; }
+
+#backsplash, #backsplash-container .image {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+#backsplash-container .image {
+  background-size: cover;
+  background-image: url(./index.png);
+}
+
+#container {
+  max-width: 960px;
+  z-index: 2;
+  margin: 0 auto;
+  margin-top: 1rem;
+  padding: 1rem;
+  font-size: 1.5rem;
+  color: $white-color;
+  font-family: "VT323", "Curier", monospace;
+
+  &.legible {
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  %hover-back {
+    position: relative;
+    transition: box-shadow 0.25s ease-in-out;
+
+    &::after {
+      content: " ";
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: -1;
+      width: 0;
+      height: 100%;
+      background-color: $white-color;
+      transition: width 0.25s ease-in-out;
+      box-shadow: 2px 1px 0 $black-color;
+      border-radius: 2px;
+
+      @supports (mix-blend-mode: difference) {
+        background-color: rgb(255, 255, 255);
+        mix-blend-mode: difference;
+        z-index: 0;
+      }
+    }
+
+    &:hover {
+      color: $black-color;
+      @supports (mix-blend-mode: difference) { color: $white-color; }
+      &:after { width: 100%; }
+    }
+  }
+
+  .hb {
+    padding: 0 0.3em;
+    display: inline-block;
+    @extend %hover-back;
+  }
+
+  %invert {
+    background-color: $white-color;
+    color: $black-color;
+    box-shadow: 2px 1px 0 $black-color;
+    border-radius: 2px;
+
+    @supports (mix-blend-mode: difference) {
+      background-color: rgb(255, 255, 255);
+      mix-blend-mode: difference;
+    }
+  }
+
+  .i {
+    margin: 0 0.25em;
+    padding: 0 0.25em;
+    display: inline-block;
+    @extend %invert;
+  }
+
+  a {
+    color: $white-color;
+    text-decoration-style: dotted;
+  }
+
+  hr {
+    margin: 1rem 0;
+    border: 1px dotted $white-color;
+  }
+
+  h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+  }
+}
