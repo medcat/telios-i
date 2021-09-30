@@ -94,7 +94,7 @@ float Bayer2(vec2 a) {
 #define Bayer64(a)  (Bayer32(.5 *(a)) * .25 + Bayer2(a))
 
 vec2 hexPixel(vec2 point) {
-  const float HEX_SIZE = 50.0;
+  const float HEX_SIZE = 24.0;
   vec2 scalePoint = point / (HEX_SIZE * sqrt(3.0));
   float tmp = floor(scalePoint.x + sqrt(3.0) * scalePoint.y + 1.0);
   float q = floor((floor(2.0 * scalePoint.x + 1.0) + tmp) / 3.0);
@@ -118,7 +118,7 @@ float vig() {
 
 void main()
 {
-  vec3 noiseInput = vec3(hexPixel(gl_FragCoord.xy) / 8.0, iTime / 32.0);
+  vec3 noiseInput = vec3(hexPixel(gl_FragCoord.xy) / 12.0, iTime / 32.0);
   float ditherNoise = (snoise(noiseInput) + 1.0) / 2.0;
 
   // vec4 mainColor = vec4(0.89804, 0.19608, 0.39608, 1.0); // 227, 50, 101
