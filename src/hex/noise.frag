@@ -121,7 +121,8 @@ void main()
   vec3 noiseInput = vec3(hexPixel(gl_FragCoord.xy) / 12.0, iTime / 32.0);
   float ditherNoise = (snoise(noiseInput) + 1.0) / 2.0;
 
-  vec4 mainColor = vec4(0.89804, 0.19608, 0.39608, 1.0); // 227, 50, 101
+  // vec4 mainColor = vec4(0.89804, 0.19608, 0.39608, 1.0); // 227, 50, 101
+  vec4 mainColor = vec4(0.282352, 0.9647058, 0.6431372, 1.0);
   // vec4 mainColor = vec4(1.0, 0.6, 0.0, 1.0);
   vec4 backgroundColor = vec4(0.06667, 0.07059, 0.11373, 1.0); // 17, 18, 29
   // vec4 mainColor = vec4(1.0, 1.0, 1.0, 2.0) - backgroundColor;
