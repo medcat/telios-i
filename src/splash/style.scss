@@ -46,6 +46,7 @@ select { font: inherit; }
   font-size: 1.5rem;
   color: $white-color;
   font-family: "VT323", "Curier", monospace;
+  text-shadow: 2px 0 0 $black-color;
 
   &.legible {
     font-family: 'Courier New', Courier, monospace;
@@ -65,20 +66,15 @@ select { font: inherit; }
       width: 0;
       height: 100%;
       background-color: $white-color;
-      transition: width 0.25s ease-in-out;
+      transition: width 0.0125s ease-in-out;
       box-shadow: 2px 1px 0 $black-color;
       border-radius: 2px;
-
-      @supports (mix-blend-mode: difference) {
-        background-color: rgb(255, 255, 255);
-        mix-blend-mode: difference;
-        z-index: 0;
-      }
+      text-shadow: none;
     }
 
     &:hover {
       color: $black-color;
-      @supports (mix-blend-mode: difference) { color: $white-color; }
+      text-shadow: none;
       &:after { width: 100%; }
     }
   }
@@ -94,11 +90,7 @@ select { font: inherit; }
     color: $black-color;
     box-shadow: 2px 1px 0 $black-color;
     border-radius: 2px;
-
-    @supports (mix-blend-mode: difference) {
-      background-color: rgb(255, 255, 255);
-      mix-blend-mode: difference;
-    }
+    text-shadow: none;
   }
 
   .i {
